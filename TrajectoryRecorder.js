@@ -64,6 +64,9 @@ function addPoint(touch) {
 }
 
 function exportTrajectory() {
+  // Effacer message précédent
+  let oldMsg = document.getElementById("export-confirmation");
+  if (oldMsg) oldMsg.remove();
   if (points.length < 2) {
     alert("Aucune trajectoire à exporter.");
     return;
@@ -86,6 +89,23 @@ function exportTrajectory() {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+
+  // Afficher un message de confirmation
+  let msg = document.createElement("div");
+  msg.id = "export-confirmation";
+  msg.innerText = `✓ ${filename} téléchargé`;
+  msg.style.position = "absolute";
+  msg.style.top = "50px";
+  msg.style.left = "10px";
+  msg.style.background = "#333";
+  msg.style.color = "#fff";
+  msg.style.padding = "8px 12px";
+  msg.style.borderRadius = "5px";
+  msg.style.fontSize = "14px";
+  msg.style.zIndex = "1000";
+  document.body.appendChild(msg);
+
+  setTimeout(() => msg.remove(), 3000);
 }
 
 function resetTrajectory() {
