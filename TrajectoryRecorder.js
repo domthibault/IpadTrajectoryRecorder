@@ -77,10 +77,14 @@ function exportTrajectory() {
   saveCount++;
   localStorage.setItem("trajectorySaveCount", saveCount);
 
-  let a = createA(url, filename);
-  a.attribute('download', filename);
-  a.hide();
-  a.elt.click();
+  // Créer dynamiquement un lien pour déclencher le téléchargement (compatible iPad Safari)
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
