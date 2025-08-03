@@ -1,4 +1,4 @@
-// TrajectoryRecorder.js — outil iPad pour dessiner et exporter des trajectoires en JSON
+// TrajectoryRecorder.js — outil iPad et Mac pour dessiner et exporter des trajectoires en JSON
 
 let points = [];
 let recording = false;
@@ -57,9 +57,31 @@ function touchEnded() {
   return false;
 }
 
+function mousePressed() {
+  points = [];
+  recording = true;
+  addMousePoint();
+}
+
+function mouseDragged() {
+  if (recording) {
+    addMousePoint();
+  }
+}
+
+function mouseReleased() {
+  recording = false;
+}
+
 function addPoint(touch) {
   let normX = constrain(touch.x / width, 0, 1);
   let normY = constrain(touch.y / height, 0, 1);
+  points.push({ x: normX, y: normY });
+}
+
+function addMousePoint() {
+  let normX = constrain(mouseX / width, 0, 1);
+  let normY = constrain(mouseY / height, 0, 1);
   points.push({ x: normX, y: normY });
 }
 
